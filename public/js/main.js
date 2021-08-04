@@ -10,7 +10,6 @@ import('/js/api.js').then((Module) => {
 
 async function main() {
     let Module = await import('/js/api.js')
-    //import('/js/api.js').then((Module) => {
     const api = Module.APIController
     if (typeof api.token != "string" ) {
         console.log('we are waiting!')
@@ -19,7 +18,6 @@ async function main() {
     } 
     const genreData = await api.getGenres();
     genreData.forEach(genre => displayGenreCard(genre));      
-    //})
 }
 main();
 
@@ -29,25 +27,29 @@ function displayGenreCard(genre) {
         <div class="column is-one-fifth">
             <div class="card">
                 <div class="card-image">
-                    <p hidden>${genre.id}</p>
                     <figure class="image is-4by4">
                     <img src="${genre.icons[0].url}" alt="Placeholder image">
                     </figure>
                 </div>
                 <div class="card-content">
-                    <button onclick="genreSelected(${genre.id})" id="${genre.id}">${genre.name}</button>
+                    <button id="${genre.id}">${genre.name}</button>
                 </div>
             </div>
         </div>        
     `;
-    //document.querySelector("#"+genre.id).addEventListener('click', genreSelected);
+    const btn = document.getElementById(genre.id)
+    btn.addEventListener('click', function() {
+        genreSelected(genre.id);
+    });
 }
 
 
 async function genreSelected(genreId) {
-    console.log('testing');
-    // const playlistData = await api.getPlaylistByGenre(genreId);
-    // playlistData.forEach(playlist => console.log(playlist));
+    console.log(genreId)
+    let Module = await import('/js/api.js')
+    const api = Module.APIController
+    const playlistData = await api.getPlaylistByGenre(genreId);
+    playlistData.forEach(playlist => console.log(playlist));
 }
 
 

@@ -31,9 +31,8 @@ class APIController {
         return data.categories.items;       
     }
 
-    async getPlaylistByGenre(genreId) {
-        console.log('here!')
-        const limit = 5;
+    static async getPlaylistByGenre(genreId) {
+        const limit = 10;
 
         const result = await fetch(`https://api.spotify.com/v1/browse/categories/${genreId}/playlists?limit=${limit}`, {
             method: 'GET',
