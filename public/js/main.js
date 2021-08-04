@@ -3,9 +3,6 @@
 
 //const api = new APIController();
 
-import('/js/api.js').then((Module) => {
-    console.log(Module.APIController.clientSecret);
-});
 //api.getToken();
 
 async function main() {
@@ -32,23 +29,23 @@ function displayGenreCard(genre) {
                     </figure>
                 </div>
                 <div class="card-content">
-                    <button id="${genre.id}">${genre.name}</button>
+                    <button onclick="genreSelected(${genre.id})" id="${genre.id}">${genre.name}</button>
                 </div>
             </div>
         </div>        
     `;
-    const btn = document.getElementById(genre.id)
-    btn.addEventListener('click', function() {
-        genreSelected(genre.id);
-    });
+    // const btn = document.getElementById(genre.id)
+    // btn.addEventListener('click', function() {
+    //     genreSelected(genre.id);
+    // });
 }
 
 
 async function genreSelected(genreId) {
-    console.log(genreId)
+    console.log(genreId.id)
     let Module = await import('/js/api.js')
     const api = Module.APIController
-    const playlistData = await api.getPlaylistByGenre(genreId);
+    const playlistData = await api.getPlaylistByGenre(genreId.id);
     playlistData.forEach(playlist => console.log(playlist));
 }
 
