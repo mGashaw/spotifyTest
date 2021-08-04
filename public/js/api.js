@@ -1,8 +1,8 @@
 export default class APIController {
 
     constructor() {
-        this.clientId = "x";
-        this.clientSecret = "z";
+        this.clientId = "";
+        this.clientSecret = "";
         this.token = "N/A";
     }
 
@@ -30,6 +30,19 @@ export default class APIController {
         const data = await result.json();
         console.log(data);
         return data.categories.items;       
+    }
+
+    async getPlaylistByGenre(genreId) {
+        console.log('here!')
+        const limit = 5;
+
+        const result = await fetch(`https://api.spotify.com/v1/browse/categories/${genreId}/playlists?limit=${limit}`, {
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + this.token}
+        });
+
+        const data = await result.json();
+        return data.playlists.items;
     }
 
     toString() {

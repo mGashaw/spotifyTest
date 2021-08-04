@@ -4,11 +4,6 @@ import APIController from "/js/api.js"
 const api = new APIController();
 api.getToken();
 
-function genreSelected() {
-    console.log('made it!');
-    // For now print a list of playlists inside of that genre.
-}
-
 async function main() {
     if (api.token === "N/A") {
         setTimeout(main, 1000);
@@ -16,6 +11,7 @@ async function main() {
     } 
     const genreData = await api.getGenres();
     genreData.forEach(genre => displayGenreCard(genre));
+    genreSelected("pop");
 }
 main();
 
@@ -25,17 +21,27 @@ function displayGenreCard(genre) {
         <div class="column is-one-fifth">
             <div class="card">
                 <div class="card-image">
-                    <p hidden> ${genre.id} </p>
+                    <p hidden>${genre.id}</p>
                     <figure class="image is-4by4">
                     <img src="${genre.icons[0].url}" alt="Placeholder image">
                     </figure>
                 </div>
                 <div class="card-content">
-                    <button onclick="genreSelected()">${genre.name}</button>
+                    <button id="${genre.id}">${genre.name}</button>
                 </div>
             </div>
         </div>        
     `;
+    document.querySelector("#"+genre.id).addEventListener('click', function() {
+        console.log('1')
+        genreSelected(genre.id);
+    });
+}
+
+
+async function genreSelected(genreId) {
+    const playlistData = await api.getPlaylistByGenre(genreId);
+    playlistData.forEach(playlist => console.log(playlist));
 }
 
 
