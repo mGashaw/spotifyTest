@@ -16,7 +16,7 @@
     <script defer src="/__/firebase/8.3.1/firebase-auth.js"></script>
     <script defer src="/__/firebase/8.3.1/firebase-database.js"></script>
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-    <script type="module" defer src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
   </head>
   <body>
     <div class="main-container">
@@ -31,7 +31,15 @@
         </div>
         <div class="genreselector">
             <div class="columns" id="genreGallery">
-
+                 <div class="column is-one-fifth">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by4">
+                            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" onclick="genreSelected()">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

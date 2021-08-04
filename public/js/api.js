@@ -1,30 +1,29 @@
-export default class APIController {
+class APIController {
 
-    constructor() {
-        this.clientId = "";
-        this.clientSecret = "";
-        this.token = "N/A";
-    }
+    static clientId     = "d89b41b14fc24bacbd04e067f15f08b4";
+    static clientSecret = "aeaaa94ae93a448c8e6722fe9b8b3f3b";
+    static token        = "N/A"
 
-    async getToken() {
+    static async getToken() {
         const result = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/x-www-form-urlencoded', 
-                'Authorization' : 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
+                'Authorization' : 'Basic ' + btoa(APIController.clientId + ':' + APIController.clientSecret)
             },
             body: 'grant_type=client_credentials'
         });
 
         const data = await result.json();
-        this.token = data.access_token;
+        APIController.token = data.access_token;
+        console.log(APIController.token);
     }
 
-    async getGenres() {
-        console.log(this.token);
+    static async getGenres() {
+        console.log(APIController.token);
         const result = await fetch(`https://api.spotify.com/v1/browse/categories?locale=sv_US`, {
             method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + this.token}
+            headers: { 'Authorization' : 'Bearer ' + APIController.token}
         });
 
         const data = await result.json();
@@ -38,7 +37,7 @@ export default class APIController {
 
         const result = await fetch(`https://api.spotify.com/v1/browse/categories/${genreId}/playlists?limit=${limit}`, {
             method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + this.token}
+            headers: { 'Authorization' : 'Bearer ' + APIController.token}
         });
 
         const data = await result.json();
@@ -50,3 +49,6 @@ export default class APIController {
     }
 
 }
+APIController.token = APIController.getToken();
+
+export { APIController }
